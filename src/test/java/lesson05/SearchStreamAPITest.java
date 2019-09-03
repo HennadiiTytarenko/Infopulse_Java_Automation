@@ -1,6 +1,5 @@
 package lesson05;
 
-import org.hamcrest.CoreMatchers;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -12,8 +11,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
+
 import java.util.stream.Stream;
 
 public class SearchStreamAPITest {
@@ -47,14 +45,18 @@ public class SearchStreamAPITest {
 
         List<WebElement> results = driver.findElements(By.xpath("//div[@class = \"ac_results\"]//li"));
         Stream<WebElement> resultsStream = results.stream();
+        Stream<WebElement> resultsStream2 = results.stream();
 
-        Assert.assertTrue("not all matches", resultsStream.allMatch(s->s.getText().contains("Summer Dress")));
+        try {
+           Assert.assertTrue("not all matches", resultsStream.allMatch(s -> s.getText().contains("Summer Dress")));
+       }
+       catch(java.lang.AssertionError error){
+           resultsStream2
+                   .map(s->s.getText())
+                   .filter(s->!s.contains("Summer Dress"))
+                   .forEach(b-> System.out.println("Not matched results: " +b));
+       }
 
-
-           /* resultsStream
-                .map(s->s.getText())
-                .filter(s->!s.contains("Summer Dress"))
-                .forEach(b-> System.out.println(b));*/
         }
 
     }
