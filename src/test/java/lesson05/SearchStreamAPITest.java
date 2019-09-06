@@ -48,7 +48,7 @@ public class SearchStreamAPITest {
         Stream<WebElement> resultsStream2 = results.stream();
 
         try {
-           Assert.assertTrue("not all matches", resultsStream.allMatch(s -> s.getText().contains("Summer Dress")));
+           Assert.assertTrue("not all matches", results.toString().contains("Summer Dress") /*resultsStream.allMatch(s -> s.getText().contains("Summer Dress"))*/);
        }
        catch(java.lang.AssertionError error){
            resultsStream2
