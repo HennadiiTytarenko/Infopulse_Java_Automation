@@ -1,4 +1,4 @@
-package lesson07;
+package lesson08;
 
 import org.checkerframework.checker.nullness.compatqual.NullableDecl;
 import org.junit.AfterClass;
@@ -23,6 +23,10 @@ public class TestWaits extends MyConditions{
 
     static WebDriver driver;
 
+    protected TestWaits(WebDriver driver) {
+        super(driver);
+    }
+
     @BeforeClass
     public static void setUp() {
 
@@ -35,7 +39,7 @@ public class TestWaits extends MyConditions{
 
         driver.get("http://automationpractice.com/index.php");
 
-        waitFor(MyConditions.pageIsLoaded("55","55"));
+
     }
 
     @AfterClass

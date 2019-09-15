@@ -1,11 +1,23 @@
-package lesson07;
+package lesson08;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.List;
+
 public class MyConditions {
+
     static WebDriver driver;
+    protected MyConditions(WebDriver driver) {
+        this.driver = driver;
+    }
+
 
     public static ExpectedCondition<Boolean> pageIsLoaded(String expUrl, String expTitle) {
         return new ExpectedCondition<Boolean>() {
@@ -25,6 +37,45 @@ public class MyConditions {
             }
         };
     }
+
+
+    public static ExpectedCondition<List<WebElement>> listNthElementHasText(By locator, int elNo, String expText) {
+        return new ExpectedCondition<Boolean>() {
+            @Override
+            public Boolean apply(WebDriver driver) {
+                try {
+                    String elementText = ExpectedConditions.findElement(locator, driver).getText();
+                    return elementText.contains(text);
+                } catch (StaleElementReferenceException var3) {
+                    return null;
+                }
+            }
+
+            public String toString() {
+                return String.format("text ('%s') to be present in element found by %s", text, locator);
+            }
+        };
+    }
+
+    public static ExpectedCondition<Boolean> stalenessOf(final WebElement element) {
+        return new ExpectedCondition<Boolean>() {
+            public Boolean apply(WebDriver ignored) {
+                try {
+                    element.isEnabled();
+                    return false;
+                } catch (StaleElementReferenceException var3) {
+                    return true;
+                }
+            }
+
+            public String toString() {
+                return String.format("element (%s) to become stale", element);
+            }
+        };
+    }
+
+
+
 
 
 

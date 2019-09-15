@@ -47,7 +47,7 @@ public class MyFirstTest {
                 CoreMatchers.containsString("Dress"));
     }
 
-    @Test(timeout = 5000l)
+    @Test(timeout = 8000l)
     public void verifyFirstTipIsCorrect_viaAssertTrue() {
         driver.findElement(By.id("search_query_top"))
                 .clear();
